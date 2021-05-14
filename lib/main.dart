@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,9 +8,10 @@ import 'package:yuka/res/app_vectorial_images.dart';
 import 'package:yuka/res/colors.dart';
 
 void main() {
-  //runApp(Details());
+  Dio dio = Dio(BaseOptions(baseUrl: 'https://api.formation-android.fr/v2/'));
+  //ProduitAPI api = ProduitAPI(dio, '5000159484695');
+  //ProduitName prod = await api.loadProduitName();
   runApp(MyApp());
-  //runApp(MyTable());
 }
 
 class MyApp extends StatelessWidget {
