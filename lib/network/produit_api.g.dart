@@ -14,19 +14,36 @@ class _ProduitAPI implements ProduitAPI {
   String? baseUrl;
 
   @override
-  Future<ProduitName> loadProduitName(
-      {barcode = '5000159484695', token}) async {
+  Future<APIProduct> loadProduct({barcode, token}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'barcode': barcode};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ProduitName>(
+        _setStreamType<APIProduct>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/getProduct',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ProduitName.fromJson(_result.data!);
+    final value = APIProduct.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<List<APIProduct>> loadProductsList({name, token}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'name': name};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<APIProduct>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/findProduct',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    var value = _result.data!
+        .map((dynamic i) => APIProduct.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 

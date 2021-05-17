@@ -20,17 +20,24 @@ class Details extends StatelessWidget {
             selectedItemColor: AppColors.blueDark,
             unselectedItemColor: AppColors.blueLight),
       ),
-      home: Onglets(),
+      home: Onglets(barcode: barcode),
     );
   }
 }
 
 class Onglets extends StatefulWidget {
+  final String barcode;
+
+  Onglets({required this.barcode});
   @override
-  _OngletsState createState() => _OngletsState();
+  _OngletsState createState() => _OngletsState(barcode: barcode);
 }
 
 class _OngletsState extends State<Onglets> {
+  final String barcode;
+
+  _OngletsState({required this.barcode});
+
   ProductDetailsCurrentTab current = ProductDetailsCurrentTab.summary;
 
   @override
@@ -82,7 +89,7 @@ class _OngletsState extends State<Onglets> {
           Positioned.fill(
             child: Offstage(
               offstage: current != ProductDetailsCurrentTab.summary,
-              child: MyHeading(),
+              child: MyHeading(barcode: barcode),
             ),
           ),
           Positioned.fill(
