@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:yuka/bloc/research_bloc.dart';
+import 'package:yuka/bloc/research_state.dart';
+import 'package:yuka/model/product.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -14,7 +16,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final PublishSubject<String> inputSubject = PublishSubject();
+  final PublishSubject<String> inputSubject = PublishSubject<String>();
   late StreamSubscription<String> listener;
   final String name = '';
 
@@ -26,7 +28,6 @@ class _SearchScreenState extends State<SearchScreen> {
     listener = inputSubject.distinct().listen((String search) {
       // TODO 1) Appeler la requête de recherche
       BlocProvider.of<ResearchBloc>(context).createProductsList(name);
-      //print(search);
     });
   }
 
@@ -49,10 +50,16 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             // TODO 2) Afficher les résultats ici
             Expanded(
-              child: ListView.builder(
-                itemCount: 0,
-                itemBuilder: (BuildContext context, int position) {
-                  return Text('TODO');
+              child: BlocBuilder<ResearchBloc, ResearchState>(
+                builder: (BuildContext context, ResearchState state) {
+                  List<APIProduct> prod = state.prod;
+
+                  return ListView.builder(
+                    itemCount: prod.length,
+                    itemBuilder: (BuildContext context, int position) {
+                      return Text(prod[position].name ?? '');
+                    },
+                  );
                 },
               ),
             ),

@@ -5,18 +5,27 @@ import 'package:yuka/network/produit_api.dart';
 class Network {
   late ProduitAPI api;
 
-  void init() {
+  Network._() {
     Dio dio = Dio(BaseOptions(baseUrl: 'https://api.formation-android.fr/v2/'));
     api = ProduitAPI(dio);
   }
 
-  Future<APIProduct> loadProduct(String barcode) {
-    init();
-    return api.loadProduct(barcode: barcode);
+  factory Network() => Network._();
+
+  Future<APIProduct?> loadProduct(String barcode) {
+    return api
+        .loadProduct(barcode: barcode)
+        .then((APIGetProductResponse response) => response.response);
   }
 
-  Future<List<APIProduct>> research(String field) {
-    init();
-    return api.loadProductsList(name: field);
+  Future<List<APIProduct>?> research(String field) async {
+    APIFindProductResponse response = await api.loadProductsList(name: field);
+    return response.response;
+  }
+
+  Future<List<APIProduct>?> research2(String field) {
+    return api
+        .loadProductsList(name: field)
+        .then((APIFindProductResponse response) => response.response);
   }
 }

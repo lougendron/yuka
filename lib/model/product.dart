@@ -16,6 +16,19 @@ class APIGetProductResponse {
 }
 
 @JsonSerializable(explicitToJson: true)
+class APIFindProductResponse {
+  final List<APIProduct>? response;
+  final Object? error;
+
+  APIFindProductResponse(this.response, this.error);
+
+  factory APIFindProductResponse.fromJson(Map<String, dynamic> json) =>
+      _$APIFindProductResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$APIFindProductResponseToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class APIProduct {
   final String barcode;
   final String? name;

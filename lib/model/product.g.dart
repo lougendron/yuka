@@ -23,6 +23,23 @@ Map<String, dynamic> _$APIGetProductResponseToJson(
       'error': instance.error,
     };
 
+APIFindProductResponse _$APIFindProductResponseFromJson(
+    Map<String, dynamic> json) {
+  return APIFindProductResponse(
+    (json['response'] as List<dynamic>?)
+        ?.map((e) => APIProduct.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    json['error'],
+  );
+}
+
+Map<String, dynamic> _$APIFindProductResponseToJson(
+        APIFindProductResponse instance) =>
+    <String, dynamic>{
+      'response': instance.response?.map((e) => e.toJson()).toList(),
+      'error': instance.error,
+    };
+
 APIProduct _$APIProductFromJson(Map<String, dynamic> json) {
   return APIProduct(
     barcode: json['barcode'] as String,

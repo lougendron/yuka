@@ -23,9 +23,9 @@ class MyHeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<APIProduct>(
+    return FutureBuilder<APIProduct?>(
         future: Network().loadProduct(barcode),
-        builder: (BuildContext context, AsyncSnapshot<APIProduct> prod) {
+        builder: (BuildContext context, AsyncSnapshot<APIProduct?> prod) {
           return BlocProvider<ProductBloc>(
             create: (_) => ProductBloc(barcode),
             child: Scaffold(

@@ -5,22 +5,25 @@ import 'package:yuka/model/product.dart';
 import 'package:yuka/network/produit_service.dart';
 
 class ResearchBloc extends Bloc<ResearchEvent, ResearchState> {
-  Future<List<APIProduct>> products =
-      <APIProduct>[] as Future<List<APIProduct>>;
-
   ResearchBloc(String name) : super(ResearchInitial()) {
     createProductsList(name);
   }
 
   void createProductsList(String name) {
-    add(const CreateResearchEvent(''));
+    add(CreateResearchEvent(name));
   }
 
   @override
   Stream<ResearchState> mapEventToState(ResearchEvent event) async* {
     if (event is CreateResearchEvent) {
-      products = Network().research(event.name);
-      yield ResearchCurrent(products);
+      List<APIProduct>? products = await Network().research(event.name);
+
+      if (products == null) {
+        // TODO VIDE
+      } else {
+        // TODO DOnnées
+        yield ResearchCurrent(products);
+      }
     }
   }
 }

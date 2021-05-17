@@ -3,14 +3,14 @@ import 'package:yuka/model/product.dart';
 
 @immutable
 abstract class ResearchState {
-  final Future<List<APIProduct>> prod;
+  final List<APIProduct> prod;
   const ResearchState(this.prod);
 }
 
 class ResearchInitial extends ResearchState {
-  ResearchInitial() : super(<APIProduct>[] as Future<List<APIProduct>>);
+  ResearchInitial() : super(<APIProduct>[]);
 }
 
 class ResearchCurrent extends ResearchState {
-  ResearchCurrent(Future<List<APIProduct>> product) : super(product);
+  ResearchCurrent(List<APIProduct> product) : super(product);
 }

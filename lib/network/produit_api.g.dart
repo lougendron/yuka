@@ -30,20 +30,18 @@ class _ProduitAPI implements ProduitAPI {
   }
 
   @override
-  Future<List<APIProduct>> loadProductsList({name, token}) async {
+  Future<APIFindProductResponse> loadProductsList({name, token}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'name': name};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<APIProduct>>(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<APIFindProductResponse>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/findProduct',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    var value = _result.data!
-        .map((dynamic i) => APIProduct.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = APIFindProductResponse.fromJson(_result.data!);
     return value;
   }
 
