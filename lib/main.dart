@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yuka/details.dart';
 import 'package:yuka/res/app_icons.dart';
@@ -46,11 +47,17 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsetsDirectional.only(end: 20.0),
             child: IconButton(
               icon: const Icon(AppIcons.barcode),
-              onPressed: () {
+              onPressed: () async {
+                String code = '';
+                try {
+                  code = await FlutterBarcodeScanner.scanBarcode(
+                      '#ff6666', 'Annuler', false, ScanMode.BARCODE);
+                } on Exception catch (_) {
+                  code = 'erreur';
+                }
                 Navigator.of(context).push(
                   MaterialPageRoute<dynamic>(
-                    builder: (BuildContext context) =>
-                        Details(barcode: '5000159484695'),
+                    builder: (BuildContext context) => Details(barcode: code),
                   ),
                 );
               },
@@ -76,11 +83,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   Icon(Icons.arrow_right_alt),
                 ]),
               ),
-              onPressed: () {
+              onPressed: () async {
+                String code = '';
+                try {
+                  code = await FlutterBarcodeScanner.scanBarcode(
+                      '#ff6666', 'Annuler', false, ScanMode.BARCODE);
+                } on Exception catch (_) {
+                  code = 'erreur';
+                }
                 Navigator.of(context).push(
                   MaterialPageRoute<dynamic>(
-                    builder: (BuildContext context) =>
-                        Details(barcode: '5000159484695'),
+                    builder: (BuildContext context) => Details(barcode: code),
                   ),
                 );
               },

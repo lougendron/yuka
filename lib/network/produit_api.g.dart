@@ -14,18 +14,18 @@ class _ProduitAPI implements ProduitAPI {
   String? baseUrl;
 
   @override
-  Future<APIProduct> loadProduct({barcode, token}) async {
+  Future<APIGetProductResponse> loadProduct({barcode, token}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'barcode': barcode};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<APIProduct>(
+        _setStreamType<APIGetProductResponse>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/getProduct',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = APIProduct.fromJson(_result.data!);
+    final value = APIGetProductResponse.fromJson(_result.data!);
     return value;
   }
 

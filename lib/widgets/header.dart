@@ -32,7 +32,7 @@ class Heading extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
       ),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -49,7 +49,7 @@ class Heading extends StatelessWidget {
           Text(
             subtitle,
             style: const TextStyle(
-              fontSize: 22.0,
+              fontSize: 16.0,
               color: AppColors.gray2,
             ),
           ),
